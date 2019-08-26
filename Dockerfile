@@ -11,12 +11,15 @@ RUN apt-get update && apt-get install -y \
     libxt-dev \
     libssl-dev \
     libssh2-1-dev \
-    libssl1.0.0
+    libssl1.0.0 \
+    libxml2-dev
 
 # packages needed for basic shiny functionality
-RUN R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cloud.r-project.org')"
+#RUN R -e "install.packages(c('shiny', 'rmarkdown', 'flexdashboard', 'tidyverse', 'knitr', 'plotly', 'lubridate', 'here'), repos = 'http://cran.rstudio.com')"
+RUN R -e "install.packages(c('shiny', 'rmarkdown'))"
 
 # install shinyproxy package with demo shiny application
+#RUN wget https://github.com/openanalytics/shinyproxy-demo/raw/master/shinyproxy_0.0.1.tar.gz
 COPY shinyproxy_0.0.1.tar.gz /root/
 RUN R CMD INSTALL /root/shinyproxy_0.0.1.tar.gz
 RUN rm /root/shinyproxy_0.0.1.tar.gz
